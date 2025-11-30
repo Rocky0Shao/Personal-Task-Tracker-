@@ -21,9 +21,12 @@ while keepGoing
         clc;
         disp('--- Current Task List ---');
         disp(task_list');
+        
+        % 1. Draw the background tiles first
         drawScene(main_scene, row_space_holder);
-        drawText(main_scene, 'My Task List', 1, 1);
-        visualize_to_do(main_scene, task_list)
+        
+        % 2. Draw all text on top
+        visualize_to_do(main_scene, task_list);
 
         disp('Waiting for input... (Left-Click: Add, Right-Click: Delete, Space: Quit)');
     else
@@ -65,6 +68,9 @@ function [updated_list, keepGoing, new_row_space_holder] = updateTask(current_li
     end
 end
 
+
+% Take a new task via terminal input
+% Add it to end of list of task
 function updated_list = addTask(current_list)
      newItem = input('Enter new task name: ', 's');
      updated_list = current_list;
@@ -131,5 +137,21 @@ function drawText(scene, text_string, row, col)
 end
 
 function visualize_to_do(main_scene, task_list)
-
+    % Draw the Main Title
+    drawText(main_scene, 'My Task List', 1, 1);
+    
+    % Start printing tasks at Row 2
+    row_num = 2;
+     
+    % Loop through the cell array of tasks
+    for i = 1:length(task_list)
+        current_task = task_list{i};
+        formatted_current_task = "- " + current_task;
+        
+        % Draw the task string
+        drawText(main_scene, formatted_current_task, row_num, 1);
+        
+        % Move to the next row
+        row_num = row_num + 1;
+    end
 end

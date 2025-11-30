@@ -68,9 +68,16 @@ function [updated_list, keepGoing, new_row_space_holder] = updateTask(current_li
     end
 end
 
+
+% Add a task to task list
 function updated_list = addTask(current_list)
+     % Take in new task via terminal input
      newItem = input('Enter new task name: ', 's');
+
+     %Initialize output list to be input list
      updated_list = current_list;
+
+     % Add the new task to end of output list
      updated_list{end+1} = newItem; 
 end
 
@@ -88,14 +95,15 @@ function updated_list = deleteTask(current_list)
     end
 end
 
+%Add a new row of 1s to bottom of input matrix
 function newToDo = addRow(row_space_holder)
-    % Add a new row of [1, 1, 1, 1, 1] to the bottom of the matrix
     newRow = [1, 1, 1, 1, 1];
     newToDo = [row_space_holder; newRow];
 end
 
+% Delete last row from input matrix
 function new_row_space_holder = deleteRow(row_space_holder)
-    % Remove the last row if the matrix is not empty
+    % Overwrite the last row to an empty row if the matrix is not empty
     if ~isempty(row_space_holder)
         row_space_holder(end, :) = [];
     end
