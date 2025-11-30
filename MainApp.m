@@ -11,6 +11,7 @@ main_scene = simpleGameEngine('retro_cards.png', 16, 16, 10, [207,198,184]);
 % Initialize visual rows (Starts with one empty row [2,2,2,2,2])
 row_space_holder = [1,1,1,1,1]; 
 drawScene(main_scene, row_space_holder);
+drawText(main_scene, 'My Task List', 1, 1);
 
 while keepGoing
    
@@ -21,6 +22,8 @@ while keepGoing
         disp('--- Current Task List ---');
         disp(task_list');
         drawScene(main_scene, row_space_holder);
+        drawText(main_scene, 'My Task List', 1, 1);
+
         disp('Waiting for input... (Left-Click: Add, Right-Click: Delete, Space: Quit)');
     else
         clc;
@@ -93,4 +96,35 @@ function new_row_space_holder = deleteRow(row_space_holder)
         row_space_holder(end, :) = [];
     end
     new_row_space_holder = row_space_holder;
+end
+
+function drawText(scene, text_string, row, col)
+    % drawText Draws a text string at a specific row and column on the scene
+    % Inputs:
+    %   scene: The simpleGameEngine object
+    %   text_string: The text you want to display (string or char array)
+    %   row: The row number to place the text
+    %   col: The column number to place the text
+
+    % 1. Get the axes where the game is displayed
+    ax = ancestor(scene.my_image, 'axes');
+    
+    % 2. Calculate the pixel size of one tile (taking zoom into account)
+    tile_h = scene.sprite_height * scene.zoom;
+    tile_w = scene.sprite_width * scene.zoom;
+    
+    % 3. Convert Row/Col to Pixel X/Y coordinates
+    % (We subtract 1 because row 1, col 1 starts at pixel 0,0)
+    x = (col - 1) * tile_w;
+    y = (row - 1) * tile_h;
+    
+    % 4. Draw the text
+    % We specify Color (k=black), Font properties, and Align to Top-Left of the tile
+    text(ax, x, y, text_string, ...
+        'Color', 'k', ...
+        'FontSize', 50, ...
+        'FontWeight', 'bold', ...
+        'Interpreter', 'none', ...
+        'VerticalAlignment', 'top', ...
+        'HorizontalAlignment', 'left');
 end
