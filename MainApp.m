@@ -21,8 +21,12 @@ while keepGoing
         clc;
         disp('--- Current Task List ---');
         disp(task_list');
+        
+        % 1. Draw the background tiles first
         drawScene(main_scene, row_space_holder);
-        drawText(main_scene, 'My Task List', 1, 1);
+        
+        % 2. Draw all text on top
+        visualize_to_do(main_scene, task_list);
 
         disp('Waiting for input... (Left-Click: Add, Right-Click: Delete, Space: Quit)');
     else
@@ -85,8 +89,8 @@ function updated_list = deleteTask(current_list)
 end
 
 function newToDo = addRow(row_space_holder)
-    % Add a new row of [2,2,2,2,2] to the bottom of the matrix
-    newRow = [2, 2, 2, 2, 2];
+    % Add a new row of [1, 1, 1, 1, 1] to the bottom of the matrix
+    newRow = [1, 1, 1, 1, 1];
     newToDo = [row_space_holder; newRow];
 end
 
@@ -127,4 +131,23 @@ function drawText(scene, text_string, row, col)
         'Interpreter', 'none', ...
         'VerticalAlignment', 'top', ...
         'HorizontalAlignment', 'left');
+end
+
+function visualize_to_do(main_scene, task_list)
+    % Draw the Main Title
+    drawText(main_scene, 'My Task List', 1, 1);
+    
+    % Start printing tasks at Row 2
+    row_num = 2;
+     
+    % Loop through the cell array of tasks
+    for i = 1:length(task_list)
+        current_task = task_list{i};
+        
+        % Draw the task string
+        drawText(main_scene, current_task, row_num, 1);
+        
+        % Move to the next row
+        row_num = row_num + 1;
+    end
 end
