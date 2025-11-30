@@ -143,9 +143,10 @@ function visualize_to_do(main_scene, task_list)
     % Loop through the cell array of tasks
     for i = 1:length(task_list)
         current_task = task_list{i};
+        formatted_current_task = "- " + current_task;
         
         % Draw the task string
-        drawText(main_scene, current_task, row_num, 1);
+        drawText(main_scene, formatted_current_task, row_num, 1);
         
         % Move to the next row
         row_num = row_num + 1;
